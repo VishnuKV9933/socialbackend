@@ -70,7 +70,7 @@ mongoose.connect(process.env.MONGO_URL,
 
 
 
-app.listen(8800,()=>{
+app.listen(3000,()=>{
 console.log("backend server is running");
 }) 
 
