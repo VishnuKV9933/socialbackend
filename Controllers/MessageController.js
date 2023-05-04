@@ -18,6 +18,9 @@ const message=async(req,res)=>{
         })
         const savedMessage =await message.save()
 
+     const connverstaion=   await conversationModel.updateOne({_id:mongoose.Types.ObjectId(req.body.conversationId)},
+     {currentTime:Date.now()})
+
         res.status(200).json(savedMessage)
 
     } catch (error) {

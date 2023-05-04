@@ -26,7 +26,7 @@ const conversation =async(req,res)=>{
 const userConversations=async(req,res)=>{
     try {
 
-        const converstaion=await conversationModel.find({members:{$in:mongoose.Types.ObjectId(req.params.userId)}})
+        const converstaion=await conversationModel.find({members:{$in:mongoose.Types.ObjectId(req.params.userId)}}).sort({ updatedAt: -1 })
         res.status(200).json(converstaion)
     } catch (error) {
         console.log(error);

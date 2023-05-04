@@ -35,6 +35,36 @@ const s3 = new S3Client({
   region: region,
 });
 
+
+
+module.exports.checkuser = (req, res, next) => { 
+  
+  const User = require("../Models/UserModel");
+  const jwt = require("jsonwebtoken");
+
+    const authHeader = req.headers.authorization;
+    if (authHeader && authHeader.startsWith("Bearer ")) {
+        const token = authHeader.substring(7);
+        if (token) {
+            jwt.verify(token,process.env.userJwtKey, async (err, decodedToken) => {
+                if (err) {
+                    next(); 
+                } else {
+                    const user = await User.findById(decodedToken.id);
+                    if (user) {
+                        res.json({ status: true, user:user});
+                    } else {
+                        next();
+                    } 
+                }
+            }); 
+        }else{ 
+            next();
+        }
+      }
+    }
+
+
 // upload post ----------------------
 
 const userPostS3Upload = async (req, res) => {
