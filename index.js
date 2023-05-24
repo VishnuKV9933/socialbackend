@@ -35,19 +35,19 @@ app.use(morgon("common"))
 //   next();
 // });
 
-// app.use(cors({
-//   origin: ['https://master.dmbqq1mmj9oke.amplifyapp.com'],
-//   method: ['GET,PATCH, PUT, POST, DELETE, OPTIONS'],
-//   credentials: true,
-// }));
-
-app.use(cors(
-  {
-  origin: ['http://localhost:3000'],
+app.use(cors({
+  origin: ['https://master.dmbqq1mmj9oke.amplifyapp.com'],
   method: ['GET,PATCH, PUT, POST, DELETE, OPTIONS'],
   credentials: true,
-}
-));
+}));
+
+// app.use(cors(
+//   {
+//   origin: ['http://localhost:3000'],
+//   method: ['GET,PATCH, PUT, POST, DELETE, OPTIONS'],
+//   credentials: true,
+// }
+// ));
 
 app.use("/api/users",userRouter)
 
