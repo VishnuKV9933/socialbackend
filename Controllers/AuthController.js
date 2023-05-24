@@ -24,8 +24,7 @@ const handleErr = (err) => {
   } else if (err.message === "wrong pasword") {
     errors.password = "wrong pasword";
     return errors;
-  } 
-   else if (err.message === "You are blocked by admin") {
+  } else if (err.message === "You are blocked by admin") {
     errors.block = "You are blocked by admin";
     return errors;
   } else if (err.message.includes("Users validation failed")) {
@@ -63,17 +62,11 @@ const userSignUP = async (req, res) => {
       email: req.body.email,
       mobile: req.body.mobile,
       password: hashPassword,
-      
     });
     await newUser.save().then((user) => {
       const token = createToken(user._id);
 
-      res.cookie("jwt", token, {
-        withCredentials: true,
-        httpOnly: false,
-        maxAge: maxAge * 10000,
-      });
-      res.status(200).json({ user: user._id,created: true });
+      res.status(200).json({ user: user, token: token, created: true });
     });
   } catch (err) {
     const errors = handleErrors(err);
@@ -84,154 +77,103 @@ const userSignUP = async (req, res) => {
 };
 
 const userLogin = async (req, res) => {
-  
   try {
-  
     const user = await User.findOne({ email: req.body.email });
 
     if (!user) {
-
       throw new Error("Email not in use");
-
     }
 
     if (user) {
-
       const validpassword = await bcrypt.compare(
         req.body.password,
         user.password
-      ); 
- 
-      if (!validpassword) {
+      );
 
+      if (!validpassword) {
         throw new Error("wrong pasword");
       }
- 
+
       if (validpassword) {
-
-
-    
-        if(!user.block){
-
+        if (!user.block) {
           const token = createToken(user._id);
-       
+
           // res.cookie("jwt", token, {
           //   withCredentials: true,
           //   httpOnly: false,
           //   maxAge: maxAge * 10000,
           // });
-  
-  
-          res.status(200).json({user:user,token:token});
-        }else{
-          
+
+          res.status(200).json({ user: user, token: token });
+        } else {
           throw new Error("You are blocked by admin");
-
         }
-
-
       }
     }
   } catch (err) {
-
     const errors = handleErr(err);
 
     res.json({ errors, created: false });
   }
 };
 
-
-const AdminLogin=(req,res)=>{
-
+const AdminLogin = (req, res) => {
   try {
-    const Adminemail=process.env.AdminEmail
-    const Adminpassword=process.env.AdminPassword
-  
-    const { email,password } = req.body
-  
-    if(Adminemail!=email){
+    const Adminemail = process.env.AdminEmail;
+    const Adminpassword = process.env.AdminPassword;
+
+    const { email, password } = req.body;
+
+    if (Adminemail != email) {
       throw new Error("Email not in use");
-    }else if(Adminpassword!=password){
+    } else if (Adminpassword != password) {
       throw new Error("wrong pasword");
-    }else{
+    } else {
       const token = createAdminToken(process.env.AdminId);
-      // res.cookie("adminjwt",token,{
-      //  withCredentials:true,
-      //  httpOnly:false,
-      //  maxAge:maxAge*1000
-      // })
-      res.json({status:true,token})
-      
+
+      res.json({ status: true, token });
     }
-  }
-  catch (err){
+  } catch (err) {
     const errors = handleErr(err);
     res.json({ errors, created: false });
   }
+};
 
- 
-
-
-
-}
-
-const Otplogin=async(req,res)=>{
-
+const Otplogin = async (req, res) => {
   try {
-    
-    
-    const user=await UserModel.findOne({mobile:req.params.mobile})
-    
-    if(!user){
-    
-      res.json({user:false})
-    }
-    else{
-    
-      res.json({user:user})
+    const user = await UserModel.findOne({ mobile: req.params.mobile });
+
+    if (!user) {
+      res.json({ user: false });
+    } else {
+      res.json({ user: user });
     }
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
   }
+};
 
-}
-
-
-const otpVerify=async(req,res)=>{
-
+const otpVerify = async (req, res) => {
   try {
-    
-    
-      const user=await UserModel.findOne({mobile:req.params.mobile})
-    
-    if(!user){
-    
-      res.json({user:false})
-    
-    }
-    else{
-    
+    const user = await UserModel.findOne({ mobile: req.params.mobile });
+
+    if (!user) {
+      res.json({ user: false });
+    } else {
       const token = createToken(user._id);
-      res.cookie("jwt", token, {
-        withCredentials: true,
-        httpOnly: false,
-        maxAge: maxAge * 10000,
-      });
-    
-      res.json({user:user})
+      res.json({ user: user, token });
     }
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
   }
-
-}
+};
 
 module.exports = {
   userSignUP,
   userLogin,
   AdminLogin,
   Otplogin,
-  otpVerify
+  otpVerify,
 };
