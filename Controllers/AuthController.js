@@ -54,6 +54,7 @@ const handleErrors = (err) => {
 };
 
 const userSignUP = async (req, res) => {
+  console.log(req.body);
   try {
     const salt = bcrypt.genSaltSync(10);
     const hashPassword = await bcrypt.hash(req.body.password, salt);
@@ -61,6 +62,7 @@ const userSignUP = async (req, res) => {
       username: req.body.name,
       email: req.body.email,
       password: hashPassword,
+      mobile:req.body.mobile
     });
     await newUser.save().then((user) => {
       const token = createToken(user._id);
