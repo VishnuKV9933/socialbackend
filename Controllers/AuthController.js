@@ -60,7 +60,6 @@ const userSignUP = async (req, res) => {
     const newUser = new User({
       username: req.body.name,
       email: req.body.email,
-      mobile: req.body.mobile,
       password: hashPassword,
     });
     await newUser.save().then((user) => {
@@ -77,6 +76,7 @@ const userSignUP = async (req, res) => {
 };
 
 const userLogin = async (req, res) => {
+ 
   try {
     const user = await User.findOne({ email: req.body.email });
 
@@ -103,6 +103,7 @@ const userLogin = async (req, res) => {
           //   httpOnly: false,
           //   maxAge: maxAge * 10000,
           // });
+          console.log("token",token); 
 
           res.status(200).json({ user: user, token: token });
         } else {

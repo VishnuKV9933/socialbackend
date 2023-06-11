@@ -10,7 +10,7 @@ const conversationRouter=require("./Routes/converstion")
 const message=require("./Routes/message")
 const admin = require("./Routes/admin")
 const notification = require("./Routes/notification")
-const cors = require('cors')
+  const cors = require('cors')
 const cookieParser =require("cookie-parser")
 mongoose.set('strictQuery', true); 
 const bodyParser=require('body-parser')
@@ -35,19 +35,19 @@ app.use(morgon("common"))
 //   next();
 // });
 
-app.use(cors({
-  origin: ['https://master.dmbqq1mmj9oke.amplifyapp.com'],
-  method: ['GET,PATCH, PUT, POST, DELETE, OPTIONS'],
-  credentials: true,
-}));
-
-// app.use(cors(
-//   {
-//   origin: ['http://localhost:3000'],
+// app.use(cors({
+//   origin: ['https://master.dmbqq1mmj9oke.amplifyapp.com'],
 //   method: ['GET,PATCH, PUT, POST, DELETE, OPTIONS'],
 //   credentials: true,
-// }
-// ));
+// }));
+
+app.use(cors(
+  {
+  origin: ['http://localhost:3000'],
+  method: ['GET,PATCH, PUT, POST, DELETE'],
+  credentials: true,
+}
+));
 
 app.use("/api/users",userRouter)
 

@@ -134,12 +134,13 @@ const userPostS3Upload = async (req, res) => {
 const getPosts = async (req, res) => {
   try {
     const user =await UserModel.findById(req.params.userId)
-  
+   const newworld="NEW WORLD"
     const posts = await PostModel.find(
-      {$and:[{blocked:false},
+      {$and:[
+        {blocked:false},
         {_id:{$nin:user.reportedPost}},
         {
-          $or:[{userId:user._id}, {userId:{$in:user.following}}
+          $or:[{userId:user._id}, {userId:{$in:user.following}},{userName:newworld}
          ]}
       ]
     }

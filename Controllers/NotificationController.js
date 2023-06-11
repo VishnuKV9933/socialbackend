@@ -151,14 +151,14 @@ const follow=async(req,res)=>{
     try {
         const user=await UserModel.findById(req.body.userId)
     const data={
-        postId:null,
+        postId:null, 
         senderName:user.username,
         senderId:mongoose.Types.ObjectId(req.body.userId),
         userId:mongoose.Types.ObjectId(req.body.followingId),
         message:`started following you`
     }
 
-    const notification =  new notificationModel(data)
+    const notification =  new notificationModel(data) 
     const response=  await notification.save()
 
 
@@ -174,9 +174,7 @@ const follow=async(req,res)=>{
 
 
 const read=async(req,res)=>{
-
-
-
+console.log("read");
     try {
      
         const res=await notificationModel.updateOne({_id:mongoose.Types.ObjectId(req.params.id)},
