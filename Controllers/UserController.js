@@ -140,7 +140,8 @@ const getPosts = async (req, res) => {
         {blocked:false},
         {_id:{$nin:user.reportedPost}},
         {
-          $or:[{userId:user._id}, {userId:{$in:user.following}},{userName:newworld}
+          $or:[{userId:user._id}, {userId:{$in:user.following}},{userName:newworld},{
+            description:"Welcome to NEW WORLD"}
          ]}
       ]
     }
