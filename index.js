@@ -27,16 +27,10 @@ app.use(express.json())
 app.use(helmet())
 app.use(morgon("common"))
 
-// app.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "https://master.dmbqq1mmj9oke.amplifyapp.com");
-//   res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS");
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   res.header("Access-Control-Allow-Credentials", true);
-//   next();
-// });
+
 
 app.use(cors({
-  origin: ['https://master.dmbqq1mmj9oke.amplifyapp.com'],
+  origin: ['https://master.d20cr0u7v4esnk.amplifyapp.com'],
   method: ['GET,PATCH, PUT, POST, DELETE, OPTIONS'],
   credentials: true,
 }));
@@ -73,7 +67,7 @@ mongoose.connect(process.env.MONGO_URL,
 
 
 
-app.listen(4000,()=>{
+app.listen(7000,()=>{
 console.log("backend server is running");
 }) 
 
