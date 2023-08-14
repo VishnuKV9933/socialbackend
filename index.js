@@ -68,7 +68,7 @@ mongoose.connect(process.env.MONGO_URL,
 
 
 app.listen(7000,()=>{
-console.log("backend server is running");
+console.log("backend server is running on post 7000");
 }) 
 
 
