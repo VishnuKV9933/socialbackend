@@ -29,11 +29,11 @@ app.use(morgon("common"))
 
 
 
-// app.use(cors({
-//   origin: ['https://master.d20cr0u7v4esnk.amplifyapp.com'],
-//   method: ['GET,PATCH, PUT, POST, DELETE, OPTIONS'],
-//   credentials: true,
-// }));
+app.use(cors({
+  origin: ['https://master.d20cr0u7v4esnk.amplifyapp.com'],
+  method: ['GET,PATCH, PUT, POST, DELETE, OPTIONS'],
+  credentials: true,
+}));
 
 app.use(cors(
   {
