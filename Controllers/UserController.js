@@ -91,12 +91,11 @@ const userPostS3Upload = async (req, res) => {
       const buffer = await sharp(req.file.buffer)
         .rotate()
         .resize({
-          height: 600,
-          width: 800,
-          fit: "contain",
+          height: 6000,
+          width: 8000,
+          fit: "cover",
           withoutEnlargement: true,
         })
-
         .toBuffer();
 
       const params = {
@@ -211,6 +210,8 @@ const likeUnlike = async (req, res) => {
 };
  
 const getuser = async (req, res) => {
+
+  console.log(req.body.userId,"id check");
   try {
     const user = await UserModel.findById(req.body.userId);
 
@@ -733,16 +734,18 @@ const deletePost = async (req, res) => {
     
     
       const post = await postModel.findById(req.params.id);
+
     
-      if (!post?.image) {
-      } else {
-        const params = {
-          Bucket: bucketName,
-          Key: post.image,
-        };
-        const command = new DeleteObjectCommand(params);
-        await s3.send(command);
-      }
+    
+      // if (!post?.image) {
+      // } else {
+      //   const params = {
+      //     Bucket: bucketName,
+      //     Key: post.image,
+      //   };
+      //   const command = new DeleteObjectCommand(params);
+      //   await s3.send(command);
+      // }
     
       PostModel.deleteOne({ _id: mongoose.Types.ObjectId(req.params.id) }).then(
         (data) => {

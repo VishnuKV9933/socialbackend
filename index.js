@@ -35,13 +35,13 @@ app.use(cors({
   credentials: true,
 }));
 
-app.use(cors(
-  {
-  origin: ['http://localhost:3000'],
-  method: ['GET,PATCH, PUT, POST, DELETE'],
-  credentials: true,
-}
-));
+// app.use(cors(
+//   {
+//   origin: ['http://localhost:3000'],
+//   method: ['GET,PATCH, PUT, POST, DELETE'],
+//   credentials: true,
+// }
+// ));
 
 app.use("/api/users",userRouter)
 
